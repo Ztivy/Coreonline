@@ -29,7 +29,7 @@ class ConfiguracionFrame(ctk.CTkFrame):
         
         self.entry_asistente = ctk.CTkEntry(
             self, 
-            placeholder_text="Ej: Jarvis, Alexa, Corenline",
+            placeholder_text="Ej: Jarvis, Alexa, Coreonline",
             width=300
         )
         self.entry_asistente.grid(row=1, column=1, padx=20, pady=10, sticky="w")
@@ -456,7 +456,7 @@ class App(ctk.CTk):
         ctk.set_default_color_theme("blue")
         
         self.geometry("900x700")
-        self.title("Corenline - Asistente Virtual")
+        self.title("Coreonline - Asistente Virtual")
         
         # Archivo de configuración
         self.config_file = "config_asistente.json"
@@ -476,7 +476,7 @@ class App(ctk.CTk):
         # Logo/Título
         self.logo_label = ctk.CTkLabel(
             self.sidebar, 
-            text="Corenline", 
+            text="Coreonline", 
             font=ctk.CTkFont(size=24, weight="bold")
         )
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
