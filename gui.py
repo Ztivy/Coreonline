@@ -173,7 +173,8 @@ class VozFrame(ctk.CTkFrame):
         self.combo_voz = ctk.CTkComboBox(
             self,
             values=["Masculina - Grave", "Masculina - Normal", "Femenina - Normal", "Femenina - Aguda"],
-            width=300
+            width=300,
+            state="readonly"
         )
         self.combo_voz.grid(row=1, column=1, padx=20, pady=10, sticky="w")
         
@@ -248,7 +249,8 @@ class VozFrame(ctk.CTkFrame):
         self.combo_motor = ctk.CTkComboBox(
             self,
             values=["pyttsx3 (Offline)", "gTTS (Google)", "Azure TTS", "Amazon Polly"],
-            width=300
+            width=300,
+            state="readonly"
         )
         self.combo_motor.grid(row=4, column=1, padx=20, pady=10, sticky="w")
         
@@ -358,7 +360,7 @@ class AparienciaFrame(ctk.CTkFrame):
             self,
             values=["blue", "green", "dark-blue"],
             width=200,
-            command=self.cambiar_esquema_color
+            state="readonly"
         )
         self.combo_color.grid(row=2, column=1, padx=20, pady=10, sticky="w")
         
@@ -418,10 +420,6 @@ class AparienciaFrame(ctk.CTkFrame):
         self.info_tema.configure(text=f"Tema actual: {texto_tema}")
         self.app.mostrar_mensaje(f"🎨 Tema cambiado a {texto_tema}")
     
-    def cambiar_esquema_color(self, choice):
-        ctk.set_default_color_theme(choice)
-        self.app.mostrar_mensaje(f"🎨 Esquema de color: {choice}")
-    
     def actualizar_fuente(self, value):
         self.label_valor_fuente.configure(text=f"{int(value)}pt")
     
@@ -432,7 +430,7 @@ class AparienciaFrame(ctk.CTkFrame):
             "tamaño_fuente": self.slider_fuente.get()
         }
         self.app.guardar_config_apariencia(config_apariencia)
-        self.app.mostrar_mensaje("✅ Configuración de apariencia guardada")
+        self.app.mostrar_mensaje("✅ Configuración guardada. El esquema de color se aplicará al reiniciar")
     
     def cargar_valores(self, config):
         """Carga los valores guardados"""
@@ -452,17 +450,24 @@ class App(ctk.CTk):
         super().__init__()
         
         # Configuración inicial
-        ctk.set_appearance_mode("light")
-        ctk.set_default_color_theme("blue")
+        # Cargar configuración existente primero
+        self.config_file = "config_asistente.json"
+        self.config = self.cargar_configuracion()
+        
+        # Aplicar configuración de apariencia si existe
+        if "apariencia" in self.config:
+            tema = self.config["apariencia"].get("tema", "light")
+            esquema = self.config["apariencia"].get("esquema_color", "blue")
+            ctk.set_appearance_mode(tema)
+            ctk.set_default_color_theme(esquema)
+        else:
+            ctk.set_appearance_mode("light")
+            ctk.set_default_color_theme("blue")
         
         self.geometry("900x700")
         self.title("Coreonline - Asistente Virtual")
         
-        # Archivo de configuración
-        self.config_file = "config_asistente.json"
-        
-        # Cargar configuración existente
-        self.config = self.cargar_configuracion()
+        # Archivo de configuración ya cargado arriba
         
         # Frame principal con barra lateral
         self.grid_columnconfigure(1, weight=1)
