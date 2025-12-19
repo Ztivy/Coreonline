@@ -176,6 +176,7 @@ class VozFrame(ctk.CTkFrame):
             width=300,
             state="readonly"
         )
+        self.combo_voz.set("Masculina - Normal")  # Valor por defecto
         self.combo_voz.grid(row=1, column=1, padx=20, pady=10, sticky="w")
         
         # Velocidad de voz
@@ -252,6 +253,7 @@ class VozFrame(ctk.CTkFrame):
             width=300,
             state="readonly"
         )
+        self.combo_motor.set("pyttsx3 (Offline)")  # Valor por defecto
         self.combo_motor.grid(row=4, column=1, padx=20, pady=10, sticky="w")
         
         # Botón probar voz
@@ -362,6 +364,7 @@ class AparienciaFrame(ctk.CTkFrame):
             width=200,
             state="readonly"
         )
+        self.combo_color.set("blue")  # Valor por defecto
         self.combo_color.grid(row=2, column=1, padx=20, pady=10, sticky="w")
         
         # Tamaño de fuente
